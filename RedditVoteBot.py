@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
-#redditvotebot v2.0 by sped
-
 import praw
 import os
-import threading
 from dotenv import load_dotenv
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor
 
 load_dotenv()
 
@@ -16,41 +14,36 @@ reddit = praw.Reddit(
     password=os.environ.get("PRAW_PASSWORD")
 )
 
-def vote_on_comments(user, vote_type, already_done):
-    for comment in user.comments.new(limit=None):
-        if comment.id not in already_done:
-            if vote_type == 'upvote':
-                comment.upvote()
-            elif vote_type == 'downvote':
-                comment.downvote()
-            already_done.add(comment.id)
-            print(comment.permalink)
+def vote_on_submissions(user, vote_type, already_done):
+    for submission in user.submissions.new(limit=None):
+        if submission.id not in already_done:
+            getattr(submission, vote_type)()
+            already_done.append(submission.id)
+            print(submission.permalink)
+            time.sleep(30) 
 
 def run_bot():
     username = input('Enter the username of the target: ')
     vote_type = input('Would you like to (U)pvote or (D)ownvote the target? (U|D). ')
     run_continuously = input('Would you like the bot to run continuously? (Y|N) ')
-    upvote = {'u', 'U'}
-    downvote = {'d', 'D'}
-    yes = {'y', 'Y'}
+    vote_actions = {'u': 'upvote', 'd': 'downvote'}
+    run_continuously_actions = {'y': True, 'n': False}
 
-    already_done = set()
+    already_done = deque(maxlen=1000)
     user = reddit.redditor(username)
+
     while True:
-        if vote_type in downvote:
-            print('Beginning to downvote. The permalink to the comment will be printed when a comment is downvoted.')
-            t = threading.Thread(target=vote_on_comments, args=(user, 'downvote', already_done))
-            t.start()
-        elif vote_type in upvote:
-            print('Beginning to upvote. The permalink to the comment will be printed when a comment is upvoted.')
-            t = threading.Thread(target=vote_on_comments, args=(user, 'upvote', already_done))
-            t.start()
+        vote_action = vote_actions.get(vote_type.lower())
+        if vote_action:
+            print(f'Beginning to {vote_action}. The permalink to the submission will be printed when a submission is {vote_action}d.')
+            with ThreadPoolExecutor() as executor:
+                executor.submit(vote_on_submissions, user, vote_action, already_done)
         else:
             print('Invalid vote type.')
             break
 
-        if run_continuously in yes:
-            t.join()
+        if run_continuously_actions.get(run_continuously.lower()):
+            pass
         else:
             break
 
