@@ -29,6 +29,8 @@ RedditVoteBot is a Python script that was used to automatically upvote or downvo
    - `PRAW_USER_AGENT`: a descriptive user agent string
    - `PRAW_USERNAME`: your Reddit username
    - `PRAW_PASSWORD`: your Reddit password
+6. Configure the delay for checking for a new post by changing the following variables in `.env`
+   - `DELAY_SECONDS`:  Time to wait (in seconds)
 6. Run the script from the command line: `python3 RedditVoteBot.py`.
 
 ## Usage
