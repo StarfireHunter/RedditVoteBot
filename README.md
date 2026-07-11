@@ -21,7 +21,7 @@ This repository was originally programmed by [spediso](https://github.com/spedis
 
 ## Getting Started
 
-1. Clone this repository or download the script `RedditSubmissionVoteBot.py` & `.env` files and put them in the same directory.
+1. Clone this repository or download the `RedditSubmissionVoteBot.py` & `.env` files and put them in the same directory.
 2. Install Praw: `pip install praw`.
 3. Install dotenv: `pip install python-dotenv`
 4. Register a Reddit application and obtain OAuth2 credentials by following the instructions [here](https://www.reddit.com/prefs/apps).
