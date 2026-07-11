@@ -21,7 +21,7 @@ This repository was originally programmed by [spediso](https://github.com/spedis
 
 ## Getting Started
 
-1. Clone this repository or download the script `RedditVoteBot.py`.
+1. Clone this repository or download the script `RedditSubmissionVoteBot.py` & `.env` files and put them in the same directory.
 2. Install Praw: `pip install praw`.
 3. Install dotenv: `pip install python-dotenv`
 4. Register a Reddit application and obtain OAuth2 credentials by following the instructions [here](https://www.reddit.com/prefs/apps).
@@ -33,18 +33,18 @@ This repository was originally programmed by [spediso](https://github.com/spedis
    - `PRAW_PASSWORD`: your Reddit password
 6. Configure the delay for checking for a new post by changing the following variables in `.env`
    - `DELAY_SECONDS`:  Time to wait (in seconds)
-7. Run the script from the command line: `python3 RedditVoteBot.py`.
+7. Run the script from the command line: `python3 RedditSubmissionVoteBot.py`.
 
 ## Usage
 
 When the script was functional, running it would prompt you to enter the target Reddit user's username, whether you wanted to upvote or downvote their Submissions, and whether you wanted the bot to run continuously. The script would then automatically upvote or downvote all Submissions made by the target user, printing the permalink of each Submission that was voted on.
 
-### Example usage (Historical/Outdated):
+### Example usage (Historical):
 
 ```text
 Enter the username of the target: some_user
-Would you like to (U)pvote or (D)ownvote the target? (U|D). D
-Would you like the bot to run continuously? (Y|N) Y
-Beginning to downvote. The permalink to the Submission will be printed when a Submission is downvoted.
-[https://www.reddit.com/r/some_subreddit/Submissions/some_post/some_Submission](https://www.reddit.com/r/some_subreddit/Submissions/some_post/some_Submission)
-[https://www.reddit.com/r/some_subreddit/Submissions/some_post/another_Submission](https://www.reddit.com/r/some_subreddit/Submissions/some_post/another_Submission)
+Would you like to (U)pvote or (D)ownvote? (U|D): u
+Would you like the bot to run continuously? (Y|N): y
+2025-07-11 13:41:46 - [INFO] - Checking submissions for /u/some_user...
+2025-07-11 13:41:48 - [INFO] - Action 'upvote' applied to: [https://www.reddit.com/r/example_subreddit/comments/abc123/example_post/](https://www.reddit.com/r/example_subreddit/comments/abc123/example_post/)
+2025-07-11 13:41:52 - [INFO] - Sleeping for 60 seconds before next check...
