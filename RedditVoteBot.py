@@ -8,18 +8,22 @@ import praw
 # ==========================================
 # DEBUG CONFIGURATION
 # ==========================================
-# Set to True to see detailed console output. 
-# Set to False to only see essential print statements.
-DEBUG_MODE = False  
+DEBUG_MODE = False 
 
 if DEBUG_MODE:
     logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - [DEBUG] - %(message)s')
 else:
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - [INFO] - %(message)s')
-
 # ==========================================
 
 load_dotenv()
+
+# Read the delay from the .env file, defaulting to 60 seconds if it's missing or invalid
+try:
+    LOOP_DELAY = int(os.environ.get("DELAY_SECONDS", 60))
+except ValueError:
+    logging.warning("Invalid DELAY_SECONDS in .env. Defaulting to 60 seconds.")
+    LOOP_DELAY = 60
 
 reddit = praw.Reddit(
     client_id=os.environ.get("PRAW_CLIENT_ID"),
@@ -43,11 +47,9 @@ def process_submissions(user, vote_type, already_done):
                 getattr(submission, vote_type)()
                 already_done.append(submission.id)
                 
-                # This always prints as long as the level is INFO or higher
                 logging.info(f"Action '{vote_type}' applied to: {submission.permalink}")
-                time.sleep(2)
+                time.sleep(2)  # Short baseline safety delay between individual actions
             else:
-                # This will ONLY print if DEBUG_MODE = True
                 logging.debug(f"Skipping submission ID {submission.id} (Already processed)")
                 
     except Exception as e:
@@ -69,12 +71,12 @@ def run_bot():
     user = reddit.redditor(username)
 
     while True:
-        logging.info(f'Checking submissions for  /u/{username}...')
+        logging.info(f'Checking submissions for /u/{username}...')
         process_submissions(user, vote_action, already_done)
         
         if run_continuously == 'y':
-            logging.info("Sleeping for 60 seconds before next check...")
-            time.sleep(60)
+            logging.info(f"Sleeping for {LOOP_DELAY} seconds before next check...")
+            time.sleep(LOOP_DELAY)
         else:
             logging.debug("Run continuously not requested. Exiting loop.")
             break
