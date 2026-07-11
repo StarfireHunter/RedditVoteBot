@@ -1,3 +1,10 @@
+> [!WARNING]
+> **This repository is officially ARCHIVED and no longer functional.**
+>
+> Due to structural updates and stricter OAuth enforcement implemented by Reddit regarding their API endpoints, programmatic and automated voting actions via personal script applications are strictly blocked by the platform. As a result, this script will now return a `404 Not Found` error upon attempting any vote modifications.
+> 
+> Because this is a platform-side restriction enforced on Reddit's servers, there is no workaround or code patch to fix it. This repository remains online purely for historical/educational reference and will not receive further updates or support.
+
 # RedditVoteBot
 
 RedditVoteBot is a Python script that can be used to automatically upvote or downvote all Submissions made by a specific Reddit user.
