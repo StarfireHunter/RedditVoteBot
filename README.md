@@ -7,7 +7,9 @@
 
 # RedditVoteBot
 
-RedditVoteBot is a Python script that can be used to automatically upvote or downvote all Submissions made by a specific Reddit user.
+RedditVoteBot is a Python script that was used to automatically upvote or downvote all Submissions made by a specific Reddit user.
+
+> **Note:** Due to the API changes detailed in the warning above, the setup instructions below are preserved strictly for historical reference.
 
 ## Prerequisites
 
@@ -18,7 +20,7 @@ RedditVoteBot is a Python script that can be used to automatically upvote or dow
 ## Getting Started
 
 1. Clone this repository or download the script `RedditVoteBot.py`.
-2. Install requirements: `pip install -r requirements.txt`.
+2. Install Praw: `pip install praw`.
 3. Install dotenv: `pip install python-dotenv`
 4. Register a Reddit application and obtain OAuth2 credentials by following the instructions [here](https://www.reddit.com/prefs/apps).
 5. Set the following environment variables in `.env` with your Reddit OAuth2 credentials:
@@ -31,23 +33,14 @@ RedditVoteBot is a Python script that can be used to automatically upvote or dow
 
 ## Usage
 
-When you run the script, you will be prompted to enter the username of the target Reddit user, whether you want to upvote or downvote their Submissions, and whether you want the bot to run continuously. The script will then automatically upvote or downvote all Submissions made by the target user. The script will print the permalink of each Submission that is voted on.
+When the script was functional, running it would prompt you to enter the target Reddit user's username, whether you wanted to upvote or downvote their Submissions, and whether you wanted the bot to run continuously. The script would then automatically upvote or downvote all Submissions made by the target user, printing the permalink of each Submission that was voted on.
 
-### Example usage:
+### Example usage (Historical):
 
-```Enter the username of the target: some_user
+```text
+Enter the username of the target: some_user
 Would you like to (U)pvote or (D)ownvote the target? (U|D). D
 Would you like the bot to run continuously? (Y|N) Y
 Beginning to downvote. The permalink to the Submission will be printed when a Submission is downvoted.
-https://www.reddit.com/r/some_subreddit/Submissions/some_post/some_Submission
-https://www.reddit.com/r/some_subreddit/Submissions/some_post/another_Submission
-```
-
-
-## Contributing
-
-Feel free to contribute to this project by submitting a pull request. If you find any bugs or have any feature requests, please open an issue.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+[https://www.reddit.com/r/some_subreddit/Submissions/some_post/some_Submission](https://www.reddit.com/r/some_subreddit/Submissions/some_post/some_Submission)
+[https://www.reddit.com/r/some_subreddit/Submissions/some_post/another_Submission](https://www.reddit.com/r/some_subreddit/Submissions/some_post/another_Submission)
