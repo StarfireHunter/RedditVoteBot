@@ -5,9 +5,11 @@
 > 
 > Because this is a platform-side restriction enforced on Reddit's servers, there is no workaround or code patch to fix it. This repository remains online purely for historical/educational reference and will not receive further updates or support.
 
-# RedditVoteBot
+# RedditSubmissionVoteBot
 
-RedditVoteBot is a Python script that was used to automatically upvote or downvote all Submissions made by a specific Reddit user.
+RedditSubmissionVoteBot is a Python script that was used to automatically upvote or downvote all Submissions made by a specific Reddit user. 
+
+This repository was originally programmed by [spediso](https://github.com/spediso/) to target comments and was subsequently modified by [starfirehunter](https://github.com/StarfireHunter) to target submissions.
 
 > **Note:** Due to the API changes detailed in the warning above, the setup instructions below are preserved strictly for historical reference.
 
