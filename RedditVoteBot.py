@@ -1,8 +1,23 @@
-import praw
 import os
+import time
+import logging
 from dotenv import load_dotenv
 from collections import deque
-from concurrent.futures import ThreadPoolExecutor
+import praw
+
+# ==========================================
+# DEBUG CONFIGURATION
+# ==========================================
+# Set to True to see detailed console output. 
+# Set to False to only see essential print statements.
+DEBUG_MODE = False  
+
+if DEBUG_MODE:
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - [DEBUG] - %(message)s')
+else:
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - [INFO] - %(message)s')
+
+# ==========================================
 
 load_dotenv()
 
@@ -14,37 +29,54 @@ reddit = praw.Reddit(
     password=os.environ.get("PRAW_PASSWORD")
 )
 
-def vote_on_submissions(user, vote_type, already_done):
-    for submission in user.submissions.new(limit=None):
-        if submission.id not in already_done:
-            getattr(submission, vote_type)()
-            already_done.append(submission.id)
-            print(submission.permalink)
-            time.sleep(30) 
+def process_submissions(user, vote_type, already_done):
+    try:
+        logging.debug(f"Fetching submissions for user: {user.name}")
+        submissions = list(user.submissions.new(limit=25))
+        logging.debug(f"Found {len(submissions)} total recent submissions.")
+
+        for submission in submissions:
+            if submission.id not in already_done:
+                logging.debug(f"Processing submission ID: {submission.id}")
+                
+                # Dynamically call upvote or downvote
+                getattr(submission, vote_type)()
+                already_done.append(submission.id)
+                
+                # This always prints as long as the level is INFO or higher
+                logging.info(f"Action '{vote_type}' applied to: {submission.permalink}")
+                time.sleep(2)
+            else:
+                # This will ONLY print if DEBUG_MODE = True
+                logging.debug(f"Skipping submission ID {submission.id} (Already processed)")
+                
+    except Exception as e:
+        logging.error(f"An error occurred during processing: {e}")
 
 def run_bot():
     username = input('Enter the username of the target: ')
-    vote_type = input('Would you like to (U)pvote or (D)ownvote the target? (U|D). ')
-    run_continuously = input('Would you like the bot to run continuously? (Y|N) ')
+    vote_input = input('Would you like to (U)pvote or (D)ownvote? (U|D): ').lower()
+    run_continuously = input('Would you like the bot to run continuously? (Y|N): ').lower()
+    
     vote_actions = {'u': 'upvote', 'd': 'downvote'}
-    run_continuously_actions = {'y': True, 'n': False}
+    vote_action = vote_actions.get(vote_input)
+
+    if not vote_action:
+        logging.error('Invalid vote type entered. Exiting.')
+        return
 
     already_done = deque(maxlen=1000)
     user = reddit.redditor(username)
 
     while True:
-        vote_action = vote_actions.get(vote_type.lower())
-        if vote_action:
-            print(f'Beginning to {vote_action}. The permalink to the submission will be printed when a submission is {vote_action}d.')
-            with ThreadPoolExecutor() as executor:
-                executor.submit(vote_on_submissions, user, vote_action, already_done)
+        logging.info(f'Checking submissions for  /u/{username}...')
+        process_submissions(user, vote_action, already_done)
+        
+        if run_continuously == 'y':
+            logging.info("Sleeping for 60 seconds before next check...")
+            time.sleep(60)
         else:
-            print('Invalid vote type.')
-            break
-
-        if run_continuously_actions.get(run_continuously.lower()):
-            pass
-        else:
+            logging.debug("Run continuously not requested. Exiting loop.")
             break
 
 if __name__ == '__main__':
