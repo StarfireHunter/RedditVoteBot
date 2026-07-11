@@ -37,7 +37,7 @@ RedditVoteBot is a Python script that was used to automatically upvote or downvo
 
 When the script was functional, running it would prompt you to enter the target Reddit user's username, whether you wanted to upvote or downvote their Submissions, and whether you wanted the bot to run continuously. The script would then automatically upvote or downvote all Submissions made by the target user, printing the permalink of each Submission that was voted on.
 
-### Example usage (Historical):
+### Example usage (Historical/Outdated):
 
 ```text
 Enter the username of the target: some_user
