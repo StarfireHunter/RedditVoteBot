@@ -39,7 +39,7 @@ This repository was originally programmed by [spediso](https://github.com/spedis
 
 When the script was functional, running it would interactively prompt you to enter the target username, select whether you wanted to scan their **Posts** or **Comments**, choose between upvoting or downvoting, and opt to run the scanner continuously on a timer cycle. 
 
-### Example usage (Historical/Outdated):
+### Example usage (Historical):
 
 ```text
 Enter the username of the target: some_user
@@ -47,6 +47,6 @@ Would you like to target (P)osts or (C)omments? (P|C): p
 Would you like to (U)pvote or (D)ownvote? (U|D): u
 Would you like the bot to run continuously? (Y|N): y
 2026-07-11 13:41:46 - [INFO] - Checking submissions for /u/some_user...
-2026-07-11 13:41:48 - [INFO] - Action 'upvote' applied to: [https://www.reddit.com/r/example_subreddit/submissions/abc123/example_post_title/](https://www.reddit.com/r/example_subreddit/submissions/abc123/example_post_title/)
-2026-07-11 13:41:50 - [INFO] - Action 'upvote' applied to: [https://www.reddit.com/r/example_subreddit/submissions/def456/another_generic_title/](https://www.reddit.com/r/example_subreddit/submissions/def456/another_generic_title/)
+2026-07-11 13:41:48 - [INFO] - Action 'upvote' applied to: [https://www.reddit.com/r/example_subreddit/comments/abc123/example_post_title/](https://www.reddit.com/r/example_subreddit/comments/abc123/example_post_title/)
+2026-07-11 13:41:50 - [INFO] - Action 'upvote' applied to: [https://www.reddit.com/r/example_subreddit/comments/def456/another_generic_title/](https://www.reddit.com/r/example_subreddit/comments/def456/another_generic_title/)
 2026-07-11 13:41:52 - [INFO] - Sleeping for 60 seconds before next check...
