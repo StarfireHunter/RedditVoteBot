@@ -8,12 +8,26 @@ import praw
 # ==========================================
 # DEBUG CONFIGURATION
 # ==========================================
-DEBUG_MODE = False 
+# Set to False to keep the console clean
+DEBUG_MODE = False  
+
+log_date_format = '%Y-%m-%d %H:%M:%S'
+log_message_format = '%(asctime)s - [%(levelname)s] - %(message)s'
 
 if DEBUG_MODE:
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - [DEBUG] - %(message)s')
+    logging.basicConfig(
+        level=logging.DEBUG, 
+        format=log_message_format,
+        datefmt=log_date_format,
+        force=True
+    )
 else:
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - [INFO] - %(message)s')
+    logging.basicConfig(
+        level=logging.INFO, 
+        format=log_message_format,
+        datefmt=log_date_format,
+        force=True  # <--- This handles the formatting when debug is off!
+    )
 # ==========================================
 
 load_dotenv()
